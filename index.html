@@ -1,0 +1,1636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgroMitra - Smart Agriculture Solutions</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .header > div {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+        }
+
+        .header h1 span {
+            color: #27ae60;
+        }
+
+        .language-selector {
+            padding: 0.5rem 1rem;
+            border: 2px solid #27ae60;
+            border-radius: 5px;
+            background: white;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .language-selector:hover {
+            background: #e8f5e9;
+            transform: scale(1.05);
+        }
+
+        .language-indicator {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.3rem 0.8rem;
+            background: #27ae60;
+            color: white;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .profile-button {
+            display: inline-block;
+            margin-left: 1rem;
+            padding: 0.5rem 1.2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .profile-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .profile-button i {
+            margin-right: 0.3rem;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.8); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideIn {
+            from { 
+                opacity: 0; 
+                transform: translateX(100px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+        }
+
+        @keyframes slideOut {
+            from { 
+                opacity: 1; 
+                transform: translateX(0); 
+            }
+            to { 
+                opacity: 0; 
+                transform: translateX(100px); 
+            }
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .welcome-section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .welcome-section h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+
+        .welcome-section p {
+            color: #555;
+            font-size: 1.1rem;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .feature-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 2% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 800px;
+            border-radius: 10px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .btn {
+            background: #27ae60;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem;
+            transition: background 0.3s ease;
+        }
+
+        .btn:hover {
+            background: #229954;
+        }
+
+        .btn-secondary {
+            background: #3498db;
+        }
+
+        .btn-secondary:hover {
+            background: #2980b9;
+        }
+
+        .upload-section {
+            border: 2px dashed #27ae60;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .result-section {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+
+        .chat-container {
+            height: 400px;
+            overflow-y: auto;
+            border: 1px solid #ddd;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            background: #f8f9fa;
+        }
+
+        .chat-message {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background: #e3f2fd;
+            text-align: right;
+        }
+
+        .bot-message {
+            background: #f1f8e9;
+        }
+
+        .input-group {
+            margin: 1rem 0;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+            font-weight: bold;
+        }
+
+        .input-group input,
+        .input-group select,
+        .input-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .scheme-card {
+            background: white;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-left: 4px solid #27ae60;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .product-card {
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+
+        @media (max-width: 768px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header > div {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+            .profile-button {
+                font-size: 0.85rem;
+                padding: 0.4rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🌾 <span>AgroMitra</span></h1>
+        <div>
+            <select class="language-selector" id="languageSelector" onchange="changeLanguage()">
+                <option value="en">English</option>
+                <option value="hi">हिन्दी (Hindi)</option>
+                <option value="ta">தமிழ் (Tamil)</option>
+            </select>
+            <span class="language-indicator" id="languageIndicator">EN</span>
+            <button onclick="openModal('profileModal'); loadProfileData();" class="profile-button" title="View Profile">
+                👤 Profile
+            </button>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="welcome-section">
+            <h2>Welcome to Your Complete Agriculture Solution</h2>
+            <p>Empowering farmers with AI-powered disease detection, price predictions, government schemes, and more!</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" onclick="openModal('diseaseModal')">
+                <div class="feature-icon">🔬</div>
+                <h3>Disease Detection</h3>
+                <p>Upload plant images for instant AI-powered disease identification and treatment recommendations</p>
+            </div>
+
+            <div class="feature-card" onclick="openModal('priceModal')">
+                <div class="feature-icon">📈</div>
+                <h3>Price Prediction</h3>
+                <p>Get future price predictions and current market rates for various crops</p>
+            </div>
+
+            <div class="feature-card" onclick="openModal('schemesModal')">
+                <div class="feature-icon">📋</div>
+                <h3>Government Schemes</h3>
+                <p>Explore government schemes, check eligibility, and learn how to apply</p>
+            </div>
+
+            <div class="feature-card" onclick="openModal('chatbotModal')">
+                <div class="feature-icon">💬</div>
+                <h3>Ask AgriBot</h3>
+                <p>Get instant answers to your farming questions in your preferred language</p>
+            </div>
+
+            <div class="feature-card" onclick="openModal('farmstoriesModal')">
+                <div class="feature-icon">📱</div>
+                <h3>FarmStories</h3>
+                <p>Share and discover short farming videos, tips, and success stories from farmers</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Disease Detection Modal -->
+    <div id="diseaseModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('diseaseModal')">&times;</span>
+            <h2>🔬 Disease Detection</h2>
+            <div class="upload-section">
+                <h3>Upload Plant Image</h3>
+                <input type="file" id="diseaseImage" accept="image/*" style="margin: 1rem 0;">
+                <br>
+                <button class="btn" onclick="detectDisease()">Analyze Disease</button>
+            </div>
+            <div id="diseaseResult" class="result-section" style="display:none;"></div>
+        </div>
+    </div>
+
+    <!-- Price Prediction Modal -->
+    <div id="priceModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('priceModal')">&times;</span>
+            <h2>📈 Price Prediction</h2>
+            
+            <div class="input-group">
+                <label>Select State:</label>
+                <select id="stateSelect" onchange="loadMarkets()">
+                    <option value="">-- Select State --</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>Select Market:</label>
+                <select id="marketSelect">
+                    <option value="">-- Select Market --</option>
+                </select>
+            </div>
+            
+            <div class="input-group">
+                <label>Select Crop:</label>
+                <select id="cropSelect">
+                    <optgroup label="🍎 Fruits">
+                        <option value="apples">Apples</option>
+                        <option value="bananas">Bananas</option>
+                        <option value="grapes">Grapes</option>
+                        <option value="lemons">Lemons</option>
+                        <option value="limes">Limes</option>
+                        <option value="mangoes">Mangoes</option>
+                        <option value="oranges">Oranges</option>
+                        <option value="papayas">Papayas</option>
+                        <option value="pears">Pears</option>
+                        <option value="pineapples">Pineapples</option>
+                        <option value="strawberries">Strawberries</option>
+                    </optgroup>
+                    <optgroup label="🥬 Vegetables">
+                        <option value="asparagus">Asparagus</option>
+                        <option value="broccoli_bunches">Broccoli Bunches</option>
+                        <option value="broccoli_crowns">Broccoli Crowns</option>
+                        <option value="carrots">Carrots</option>
+                        <option value="cauliflower">Cauliflower</option>
+                        <option value="celery">Celery</option>
+                        <option value="green_leaf_lettuce">Green Leaf Lettuce</option>
+                        <option value="iceberg_lettuce">Iceberg Lettuce</option>
+                        <option value="potatoes">Potatoes</option>
+                        <option value="red_leaf_lettuce">Red Leaf Lettuce</option>
+                        <option value="romaine_lettuce">Romaine Lettuce</option>
+                        <option value="tomatoes">Tomatoes</option>
+                    </optgroup>
+                </select>
+            </div>
+            <button class="btn" onclick="predictPrice()">Get Price Prediction</button>
+            <button class="btn btn-secondary" onclick="getMarketPrices()">View Market Prices</button>
+            <div id="priceResult" class="result-section" style="display:none;"></div>
+        </div>
+    </div>
+
+    <!-- Schemes Modal -->
+    <div id="schemesModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('schemesModal')">&times;</span>
+            <h2>📋 Government Schemes</h2>
+            <button class="btn" onclick="loadSchemes()">View All Schemes</button>
+            <button class="btn btn-secondary" onclick="checkEligibility()">Check My Eligibility</button>
+            <div id="schemesResult"></div>
+        </div>
+    </div>
+
+    <!-- Profile Modal - Enhanced Version -->
+    <div id="profileModal" class="modal">
+        <div class="modal-content" style="max-width: 900px; max-height: 90vh; overflow-y: auto;">
+            <span class="close" onclick="closeModal('profileModal')">&times;</span>
+            
+            <!-- Profile Header -->
+            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 2rem; border-radius: 10px 10px 0 0; margin: -1rem -1rem 1.5rem -1rem; color: white; text-align: center;">
+                <div style="font-size: 4rem; margin-bottom: 0.5rem;">👨‍🌾</div>
+                <h2 style="margin: 0; font-size: 1.8rem; color: white;" id="profileHeaderName">Farmer Dashboard</h2>
+                <p style="margin: 0.5rem 0 0 0; opacity: 0.9;" id="profileHeaderLocation">Your Farming Hub</p>
+            </div>
+
+            <!-- Statistics Cards -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1.5rem; border-radius: 10px; color: white; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌾</div>
+                    <div style="font-size: 1.5rem; font-weight: bold;" id="statCropsCount">0</div>
+                    <div style="opacity: 0.9; font-size: 0.9rem;">Crops Grown</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 1.5rem; border-radius: 10px; color: white; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">📊</div>
+                    <div style="font-size: 1.5rem; font-weight: bold;" id="statFarmSize">0</div>
+                    <div style="opacity: 0.9; font-size: 0.9rem;">Farm Size (acres)</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 1.5rem; border-radius: 10px; color: white; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">🔍</div>
+                    <div style="font-size: 1.5rem; font-weight: bold;" id="statDetections">0</div>
+                    <div style="opacity: 0.9; font-size: 0.9rem;">Disease Scans</div>
+                </div>
+                <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 1.5rem; border-radius: 10px; color: white; text-align: center;">
+                    <div style="font-size: 2rem; margin-bottom: 0.5rem;">�</div>
+                    <div style="font-size: 1.5rem; font-weight: bold;" id="statPredictions">0</div>
+                    <div style="opacity: 0.9; font-size: 0.9rem;">Price Checks</div>
+                </div>
+            </div>
+
+            <!-- Profile Form -->
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+                <h3 style="margin-top: 0; color: #333;">📝 Profile Information</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="input-group">
+                        <label>👤 Full Name:</label>
+                        <input type="text" id="fullName" placeholder="Enter your full name">
+                    </div>
+                    <div class="input-group">
+                        <label>📱 Phone Number:</label>
+                        <input type="tel" id="phoneNumber" placeholder="Your contact number">
+                    </div>
+                    <div class="input-group">
+                        <label>📍 Farm Location:</label>
+                        <input type="text" id="farmLocation" placeholder="Village, District">
+                    </div>
+                    <div class="input-group">
+                        <label>🗺️ State:</label>
+                        <input type="text" id="state" placeholder="Your state">
+                    </div>
+                    <div class="input-group">
+                        <label>📏 Farm Size (acres):</label>
+                        <input type="number" id="farmSize" placeholder="Enter farm size" step="0.1">
+                    </div>
+                    <div class="input-group">
+                        <label>🌱 Main Crop:</label>
+                        <input type="text" id="mainCrop" placeholder="Primary crop">
+                    </div>
+                </div>
+                <div class="input-group" style="margin-top: 1rem;">
+                    <label>🌾 All Crops Grown:</label>
+                    <input type="text" id="cropsGrown" placeholder="e.g., Rice, Wheat, Vegetables, Cotton">
+                </div>
+            </div>
+
+            <!-- Activity Log -->
+            <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1rem;">
+                <h3 style="margin-top: 0; color: #333;">📅 Recent Activity</h3>
+                <div id="activityLog" style="max-height: 200px; overflow-y: auto;">
+                    <div style="padding: 0.75rem; background: white; border-radius: 5px; margin-bottom: 0.5rem; border-left: 4px solid #667eea;">
+                        <div style="font-weight: bold; color: #667eea;">🎉 Welcome to AgroMitra!</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">Start using features to track your activity</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div style="display: flex; gap: 1rem; justify-content: flex-end;">
+                <button class="btn" style="background: #6c757d;" onclick="closeModal('profileModal')">Cancel</button>
+                <button class="btn" onclick="saveProfile()">💾 Save Profile</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chatbot Modal -->
+    <div id="chatbotModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('chatbotModal')">&times;</span>
+            <h2>💬 AgriBot - Your Farming Assistant</h2>
+            <div class="chat-container" id="chatContainer">
+                <div class="chat-message bot-message" id="chatWelcomeMessage">
+                    <strong>AgriBot:</strong> Hello! I'm your agricultural assistant. How can I help you today?
+                </div>
+            </div>
+            <div class="input-group">
+                <input type="text" id="chatInput" placeholder="Ask me anything about farming..." onkeypress="if(event.key==='Enter') sendMessage()">
+            </div>
+            <button class="btn" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- FarmStories Modal -->
+    <div id="farmstoriesModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <span class="close" onclick="closeModal('farmstoriesModal')">&times;</span>
+            <h2>📱 FarmStories - Share Your Farming Journey</h2>
+            
+            <!-- Upload Section -->
+            <div style="margin-bottom: 2rem; padding: 1.5rem; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 10px; color: white;">
+                <h3 style="margin: 0 0 1rem 0;">📹 Share Your Story</h3>
+                <div class="input-group">
+                    <input type="text" id="storyTitle" placeholder="Title (e.g., 'My Organic Farming Success')" style="margin-bottom: 0.5rem;">
+                    <textarea id="storyDescription" placeholder="Description..." rows="2" style="width: 100%; padding: 0.5rem; border-radius: 5px; border: none; margin-bottom: 0.5rem;"></textarea>
+                    <div style="display: flex; gap: 0.5rem; margin-bottom: 0.5rem;">
+                        <input type="text" id="storyCrop" placeholder="Crop" style="flex: 1;">
+                        <input type="text" id="storyLocation" placeholder="Location" style="flex: 1;">
+                    </div>
+                    <button class="btn" onclick="uploadStory()" style="background: white; color: #667eea; font-weight: bold;">📤 Upload Story</button>
+                </div>
+            </div>
+
+            <!-- Filter Buttons -->
+            <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+                <button class="btn" onclick="loadFarmStories()" style="background: #4CAF50;">🔄 All Stories</button>
+                <button class="btn" onclick="loadTrending()" style="background: #FF6B6B;">🔥 Trending</button>
+                <input type="text" id="searchStories" placeholder="Search stories..." style="flex: 1; padding: 0.5rem; border-radius: 5px; border: 1px solid #ddd;">
+                <button class="btn" onclick="searchFarmStories()" style="background: #667eea;">🔍 Search</button>
+            </div>
+
+            <!-- Stories Feed -->
+            <div id="storiesFeed" style="max-height: 500px; overflow-y: auto;">
+                <p style="text-align: center; color: #666;">Loading FarmStories...</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        let currentLanguage = 'en';
+
+        // Translation dictionary
+        const translations = {
+            en: {
+                appName: 'AgroMitra',
+                welcome: 'Welcome to Your Complete Agriculture Solution',
+                welcomeDesc: 'Empowering farmers with AI-powered disease detection, price predictions, government schemes, and more!',
+                diseaseTitle: 'Disease Detection',
+                diseaseDesc: 'Upload plant images for instant AI-powered disease identification and treatment recommendations',
+                priceTitle: 'Price Prediction',
+                priceDesc: 'Get future price predictions and current market rates for various crops',
+                marketplaceTitle: 'Marketplace',
+                marketplaceDesc: 'Buy and sell agricultural products directly with other farmers',
+                schemesTitle: 'Government Schemes',
+                schemesDesc: 'Explore government schemes, check eligibility, and learn how to apply',
+                profileTitle: 'Profile',
+                profileDesc: 'Manage your farmer profile, farm details, and account settings',
+                chatbotTitle: 'Ask AgriBot',
+                chatbotDesc: 'Get instant answers to your farming questions in your preferred language',
+                farmstoriesTitle: 'FarmStories',
+                farmstoriesDesc: 'Share and discover short farming videos, tips, and success stories from farmers',
+                uploadImage: 'Upload Plant Image',
+                analyzeDisease: 'Analyze Disease',
+                selectState: 'Select State:',
+                selectMarket: 'Select Market:',
+                selectCrop: 'Select Crop:',
+                getPrediction: 'Get Price Prediction',
+                viewMarketPrices: 'View Market Prices',
+                viewProducts: 'View Products',
+                listNewProduct: 'List New Product',
+                viewAllSchemes: 'View All Schemes',
+                checkEligibility: 'Check My Eligibility',
+                fullName: 'Full Name:',
+                farmLocation: 'Farm Location:',
+                farmSize: 'Farm Size (acres):',
+                state: 'State:',
+                cropsGrown: 'Crops Grown:',
+                saveProfile: 'Save Profile',
+                askQuestion: 'Ask me anything about farming...',
+                send: 'Send',
+                chatWelcome: 'Hello! I\'m your agricultural assistant. How can I help you today?',
+                botName: 'AgriBot'
+            },
+            hi: {
+                appName: 'एग्रोमित्र',
+                welcome: 'आपके संपूर्ण कृषि समाधान में आपका स्वागत है',
+                welcomeDesc: 'एआई-संचालित रोग पहचान, मूल्य पूर्वानुमान, बाजार और अधिक के साथ किसानों को सशक्त बनाना!',
+                diseaseTitle: 'रोग पहचान',
+                diseaseDesc: 'तत्काल एआई-संचालित रोग पहचान और उपचार सिफारिशों के लिए पौधों की छवियां अपलोड करें',
+                priceTitle: 'मूल्य पूर्वानुमान',
+                priceDesc: 'विभिन्न फसलों के लिए भविष्य की कीमत का पूर्वानुमान और वर्तमान बाजार दरें प्राप्त करें',
+                marketplaceTitle: 'बाज़ार',
+                marketplaceDesc: 'अन्य किसानों के साथ सीधे कृषि उत्पाद खरीदें और बेचें',
+                schemesTitle: 'सरकारी योजनाएं',
+                schemesDesc: 'सरकारी योजनाओं का अन्वेषण करें, पात्रता जांचें और आवेदन करना सीखें',
+                profileTitle: 'प्रोफ़ाइल',
+                profileDesc: 'अपनी किसान प्रोफ़ाइल, खेत विवरण और खाता सेटिंग्स प्रबंधित करें',
+                chatbotTitle: 'एग्रीबॉट से पूछें',
+                chatbotDesc: 'अपनी पसंदीदा भाषा में अपने खेती के सवालों के तुरंत जवाब पाएं',
+                farmstoriesTitle: 'फार्मस्टोरीज़',
+                farmstoriesDesc: 'किसानों से छोटे वीडियो, युक्तियाँ और सफलता की कहानियाँ साझा करें और खोजें',
+                uploadImage: 'पौधे की छवि अपलोड करें',
+                analyzeDisease: 'रोग का विश्लेषण करें',
+                selectState: 'राज्य चुनें:',
+                selectMarket: 'बाज़ार चुनें:',
+                selectCrop: 'फसल चुनें:',
+                getPrediction: 'मूल्य पूर्वानुमान प्राप्त करें',
+                viewMarketPrices: 'बाजार मूल्य देखें',
+                viewProducts: 'उत्पाद देखें',
+                listNewProduct: 'नया उत्पाद सूचीबद्ध करें',
+                viewAllSchemes: 'सभी योजनाएं देखें',
+                checkEligibility: 'मेरी पात्रता जांचें',
+                fullName: 'पूरा नाम:',
+                farmLocation: 'खेत का स्थान:',
+                farmSize: 'खेत का आकार (एकड़):',
+                state: 'राज्य:',
+                cropsGrown: 'उगाई गई फसलें:',
+                saveProfile: 'प्रोफ़ाइल सहेजें',
+                askQuestion: 'खेती के बारे में मुझसे कुछ भी पूछें...',
+                send: 'भेजें',
+                chatWelcome: 'नमस्ते! मैं आपका कृषि सहायक हूं। आज मैं आपकी कैसे मदद कर सकता हूं?',
+                botName: 'एग्रीबॉट'
+            },
+            ta: {
+                appName: 'அக்ரோமித்ரா',
+                welcome: 'உங்கள் முழுமையான விவசாய தீர்வுக்கு வரவேற்கிறோம்',
+                welcomeDesc: 'AI-இயங்கும் நோய் கண்டறிதல், விலை கணிப்புகள், சந்தை மற்றும் பலவற்றுடன் விவசாயிகளுக்கு அதிகாரம் அளிக்கிறது!',
+                diseaseTitle: 'நோய் கண்டறிதல்',
+                diseaseDesc: 'உடனடி AI-இயங்கும் நோய் அடையாளம் மற்றும் சிகிச்சை பரிந்துரைகளுக்கு தாவர படங்களை பதிவேற்றவும்',
+                priceTitle: 'விலை கணிப்பு',
+                priceDesc: 'பல்வேறு பயிர்களுக்கான எதிர்கால விலை கணிப்புகள் மற்றும் தற்போதைய சந்தை விலைகளைப் பெறவும்',
+                marketplaceTitle: 'சந்தை',
+                marketplaceDesc: 'மற்ற விவசாயிகளுடன் நேரடியாக விவசாய பொருட்களை வாங்கவும் விற்கவும்',
+                schemesTitle: 'அரசு திட்டங்கள்',
+                schemesDesc: 'அரசாங்க திட்டங்களை ஆராயுங்கள், தகுதியை சரிபார்த்து, விண்ணப்பிக்க கற்றுக்கொள்ளுங்கள்',
+                profileTitle: 'சுயவிவரம்',
+                profileDesc: 'உங்கள் விவசாயி சுயவிவரம், பண்ணை விவரங்கள் மற்றும் கணக்கு அமைப்புகளை நிர்வகிக்கவும்',
+                chatbotTitle: 'AgriBot-ஐ கேளுங்கள்',
+                chatbotDesc: 'உங்கள் விருப்பமான மொழியில் உங்கள் விவசாய கேள்விகளுக்கு உடனடி பதில்களைப் பெறுங்கள்',
+                farmstoriesTitle: 'ஃபார்ம்ஸ்டோரீஸ்',
+                farmstoriesDesc: 'விவசாயிகளிடமிருந்து குறுகிய வீடியோக்கள், குறிப்புகள் மற்றும் வெற்றிக் கதைகளைப் பகிரவும் கண்டறியவும்',
+                uploadImage: 'தாவர படத்தை பதிவேற்றவும்',
+                analyzeDisease: 'நோயை பகுப்பாய்வு செய்யவும்',
+                selectState: 'மாநிலத்தைத் தேர்ந்தெடுக்கவும்:',
+                selectMarket: 'சந்தையைத் தேர்ந்தெடுக்கவும்:',
+                selectCrop: 'பயிரைத் தேர்ந்தெடுக்கவும்:',
+                getPrediction: 'விலை கணிப்பைப் பெறவும்',
+                viewMarketPrices: 'சந்தை விலைகளைக் காண்க',
+                viewProducts: 'பொருட்களைக் காண்க',
+                listNewProduct: 'புதிய தயாரிப்பு பட்டியல்',
+                viewAllSchemes: 'அனைத்து திட்டங்களையும் காண்க',
+                checkEligibility: 'எனது தகுதியை சரிபார்க்கவும்',
+                fullName: 'முழு பெயர்:',
+                farmLocation: 'பண்ணை இடம்:',
+                farmSize: 'பண்ணை அளவு (ஏக்கர்):',
+                state: 'மாநிலம்:',
+                cropsGrown: 'வளர்க்கப்பட்ட பயிர்கள்:',
+                saveProfile: 'சுயவிவரத்தை சேமிக்கவும்',
+                askQuestion: 'விவசாயம் பற்றி என்னிடம் எதையும் கேளுங்கள்...',
+                send: 'அனுப்பு',
+                chatWelcome: 'வணக்கம்! நான் உங்கள் விவசாய உதவியாளர். இன்று நான் உங்களுக்கு எப்படி உதவ முடியும்?',
+                botName: 'AgriBot'
+            }
+        };
+
+        function changeLanguage() {
+            currentLanguage = document.getElementById('languageSelector').value;
+            console.log('Language changed to:', currentLanguage);
+            
+            // Update language indicator
+            const indicator = document.getElementById('languageIndicator');
+            const languageNames = {
+                'en': 'EN',
+                'hi': 'हिं',
+                'ta': 'த'
+            };
+            indicator.textContent = languageNames[currentLanguage];
+            indicator.style.animation = 'none';
+            setTimeout(() => indicator.style.animation = 'fadeIn 0.5s ease', 10);
+            
+            updateUILanguage();
+        }
+
+        function updateUILanguage() {
+            const t = translations[currentLanguage];
+            
+            // Update header
+            document.querySelector('.header h1 span').textContent = t.appName;
+            
+            // Update welcome section
+            document.querySelector('.welcome-section h2').textContent = t.welcome;
+            document.querySelector('.welcome-section p').textContent = t.welcomeDesc;
+            
+            // Update feature cards
+            const featureCards = document.querySelectorAll('.feature-card');
+            if (featureCards[0]) {
+                featureCards[0].querySelector('h3').textContent = t.diseaseTitle;
+                featureCards[0].querySelector('p').textContent = t.diseaseDesc;
+            }
+            if (featureCards[1]) {
+                featureCards[1].querySelector('h3').textContent = t.priceTitle;
+                featureCards[1].querySelector('p').textContent = t.priceDesc;
+            }
+            if (featureCards[2]) {
+                featureCards[2].querySelector('h3').textContent = t.schemesTitle;
+                featureCards[2].querySelector('p').textContent = t.schemesDesc;
+            }
+            if (featureCards[3]) {
+                featureCards[3].querySelector('h3').textContent = t.chatbotTitle;
+                featureCards[3].querySelector('p').textContent = t.chatbotDesc;
+            }
+            
+            // Update modal titles and buttons
+            document.querySelector('#diseaseModal h2').textContent = '🔬 ' + t.diseaseTitle;
+            document.querySelector('#diseaseModal h3').textContent = t.uploadImage;
+            document.querySelectorAll('#diseaseModal .btn')[0].textContent = t.analyzeDisease;
+            
+            document.querySelector('#priceModal h2').textContent = '📈 ' + t.priceTitle;
+            const priceModalLabels = document.querySelectorAll('#priceModal label');
+            priceModalLabels[0].textContent = t.selectState;
+            priceModalLabels[1].textContent = t.selectMarket;
+            priceModalLabels[2].textContent = t.selectCrop;
+            document.querySelectorAll('#priceModal .btn')[0].textContent = t.getPrediction;
+            document.querySelectorAll('#priceModal .btn')[1].textContent = t.viewMarketPrices;
+            
+            document.querySelector('#schemesModal h2').textContent = '📋 ' + t.schemesTitle;
+            document.querySelectorAll('#schemesModal .btn')[0].textContent = t.viewAllSchemes;
+            document.querySelectorAll('#schemesModal .btn')[1].textContent = t.checkEligibility;
+            
+            document.querySelector('#profileModal h2').textContent = '👤 ' + t.profileTitle;
+            const profileLabels = document.querySelectorAll('#profileModal label');
+            if (profileLabels[0]) profileLabels[0].textContent = t.fullName;
+            if (profileLabels[1]) profileLabels[1].textContent = t.farmLocation;
+            if (profileLabels[2]) profileLabels[2].textContent = t.farmSize;
+            if (profileLabels[3]) profileLabels[3].textContent = t.state;
+            if (profileLabels[4]) profileLabels[4].textContent = t.cropsGrown;
+            document.querySelector('#profileModal .btn').textContent = t.saveProfile;
+            
+            document.querySelector('#chatbotModal h2').textContent = '💬 ' + t.chatbotTitle;
+            document.querySelector('#chatInput').placeholder = t.askQuestion;
+            document.querySelector('#chatbotModal .btn').textContent = t.send;
+            
+            // Update chatbot welcome message
+            const welcomeMsg = document.getElementById('chatWelcomeMessage');
+            if (welcomeMsg) {
+                welcomeMsg.innerHTML = `<strong>${t.botName}:</strong> ${t.chatWelcome}`;
+            }
+            
+            console.log('UI updated to ' + currentLanguage);
+            
+            // Show notification
+            const languageNames = {
+                'en': 'English',
+                'hi': 'हिन्दी',
+                'ta': 'தமிழ்'
+            };
+            showNotification('Language changed to ' + languageNames[currentLanguage]);
+        }
+
+        function showNotification(message) {
+            // Create notification element if it doesn't exist
+            let notification = document.getElementById('notification');
+            if (!notification) {
+                notification = document.createElement('div');
+                notification.id = 'notification';
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 80px;
+                    right: 20px;
+                    background: #27ae60;
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 5px;
+                    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+                    z-index: 10000;
+                    animation: slideIn 0.3s ease;
+                `;
+                document.body.appendChild(notification);
+            }
+            
+            notification.textContent = message;
+            notification.style.display = 'block';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.style.display = 'none', 300);
+            }, 3000);
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Load states when page loads or modal opens
+        async function loadStates() {
+            try {
+                const response = await fetch(`${API_BASE}/price/states`);
+                const data = await response.json();
+
+                if (data.success) {
+                    const stateSelect = document.getElementById('stateSelect');
+                    stateSelect.innerHTML = '<option value="">-- Select State --</option>';
+                    
+                    data.states.forEach(state => {
+                        const option = document.createElement('option');
+                        option.value = state;
+                        option.textContent = state;
+                        stateSelect.appendChild(option);
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading states:', error);
+            }
+        }
+
+        // Load markets when state is selected
+        async function loadMarkets() {
+            const state = document.getElementById('stateSelect').value;
+            const marketSelect = document.getElementById('marketSelect');
+            
+            if (!state) {
+                marketSelect.innerHTML = '<option value="">-- Select Market --</option>';
+                return;
+            }
+
+            try {
+                const response = await fetch(`${API_BASE}/price/markets/${encodeURIComponent(state)}`);
+                const data = await response.json();
+
+                if (data.success) {
+                    marketSelect.innerHTML = '<option value="">-- Select Market --</option>';
+                    
+                    data.markets.forEach(market => {
+                        const option = document.createElement('option');
+                        option.value = market;
+                        option.textContent = market;
+                        marketSelect.appendChild(option);
+                    });
+                } else {
+                    marketSelect.innerHTML = '<option value="">No markets found</option>';
+                }
+            } catch (error) {
+                console.error('Error loading markets:', error);
+                marketSelect.innerHTML = '<option value="">Error loading markets</option>';
+            }
+        }
+
+        // Enhanced openModal function to load states for price modal
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+            if (modalId === 'priceModal') {
+                loadStates();
+            }
+        }
+
+        // Disease Detection
+        async function detectDisease() {
+            const fileInput = document.getElementById('diseaseImage');
+            if (!fileInput.files[0]) {
+                alert('Please select an image first');
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('image', fileInput.files[0]);
+
+            const resultDiv = document.getElementById('diseaseResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading">Analyzing image...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/disease/detect`, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    // Track disease detection activity
+                    const detectionCount = parseInt(localStorage.getItem('detectionCount') || '0') + 1;
+                    localStorage.setItem('detectionCount', detectionCount.toString());
+                    addActivity('🔍', `Disease detected: ${data.disease_name}`, '#f5576c');
+                    
+                    resultDiv.innerHTML = `
+                        <h3>Analysis Results</h3>
+                        <p><strong>Disease:</strong> ${data.disease_name}</p>
+                        <p><strong>Confidence:</strong> ${data.confidence}%</p>
+                        <p><strong>Severity:</strong> ${data.severity}</p>
+                        <h4>Recommendations:</h4>
+                        <ul>
+                            ${data.recommendations.map(rec => `<li>${rec}</li>`).join('')}
+                        </ul>
+                        <p><strong>Prevention:</strong> ${data.prevention}</p>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Helper function to format crop names
+        function formatCropName(cropName) {
+            return cropName
+                .split('_')
+                .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(' ');
+        }
+
+        // Price Prediction
+        async function predictPrice() {
+            const crop = document.getElementById('cropSelect').value;
+            const state = document.getElementById('stateSelect').value;
+            const market = document.getElementById('marketSelect').value;
+            const cropDisplayName = document.getElementById('cropSelect').options[document.getElementById('cropSelect').selectedIndex].text;
+            const resultDiv = document.getElementById('priceResult');
+            
+            if (!crop) {
+                alert('Please select a crop');
+                return;
+            }
+            
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading">Fetching price prediction...</div>';
+
+            try {
+                const requestBody = {crop: crop, days: 30};
+                if (state) requestBody.state = state;
+                if (market) requestBody.market = market;
+                
+                const response = await fetch(`${API_BASE}/price/predict`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(requestBody)
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    // Track price check activity
+                    const priceCheckCount = parseInt(localStorage.getItem('priceCheckCount') || '0') + 1;
+                    localStorage.setItem('priceCheckCount', priceCheckCount.toString());
+                    addActivity('💰', `Price checked for ${cropDisplayName}`, '#4facfe');
+                    
+                    const trendIcon = {
+                        'up': '📈 ↑',
+                        'down': '📉 ↓',
+                        'stable': '➡️ →'
+                    };
+                    const trendColor = {
+                        'up': '#27ae60',
+                        'down': '#e74c3c',
+                        'stable': '#3498db'
+                    };
+                    
+                    let locationInfo = '';
+                    if (data.state && data.market) {
+                        locationInfo = `<p><strong>📍 Location:</strong> ${data.market}, ${data.state}</p>`;
+                    } else if (data.state) {
+                        locationInfo = `<p><strong>📍 State:</strong> ${data.state}</p>`;
+                    }
+                    
+                    let marketAdjustmentInfo = '';
+                    if (data.market_factor && data.market_factor !== 1.0) {
+                        const adjustmentPercent = ((data.market_factor - 1) * 100).toFixed(1);
+                        const adjustmentText = adjustmentPercent > 0 ? `+${adjustmentPercent}%` : `${adjustmentPercent}%`;
+                        marketAdjustmentInfo = `
+                            <p><strong>Market Adjustment:</strong> ${adjustmentText} (${data.market_info || 'Market specific pricing'})</p>
+                            <p style="color: #666; font-size: 0.9rem;">Base Price: ₹${data.base_price} → Market Price: ₹${data.current_price}</p>
+                        `;
+                    }
+                    
+                    resultDiv.innerHTML = `
+                        <h3>💰 Price Prediction for ${cropDisplayName}</h3>
+                        <div style="background: #f8f9fa; padding: 1rem; border-radius: 5px; margin: 1rem 0;">
+                            ${locationInfo}
+                            <p style="font-size: 1.2rem;"><strong>Current Price:</strong> <span style="color: #27ae60; font-size: 1.3rem;">₹${data.current_price}</span> per kg</p>
+                            ${marketAdjustmentInfo}
+                            <p><strong>Trend:</strong> <span style="color: ${trendColor[data.trend]}; font-weight: bold;">${trendIcon[data.trend]} ${data.trend.toUpperCase()}</span></p>
+                        </div>
+                        
+                        <!-- Price Statistics Cards -->
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                            <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 1rem; border-radius: 8px; color: white; text-align: center;">
+                                <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">📊 Average Price</div>
+                                <div style="font-size: 1.5rem; font-weight: bold;">₹${data.average_predicted_price}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 0.3rem;">30-day avg</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); padding: 1rem; border-radius: 8px; color: white; text-align: center;">
+                                <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">📉 Min Price</div>
+                                <div style="font-size: 1.5rem; font-weight: bold;">₹${data.min_price}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 0.3rem;">Lowest expected</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); padding: 1rem; border-radius: 8px; color: white; text-align: center;">
+                                <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">📈 Max Price</div>
+                                <div style="font-size: 1.5rem; font-weight: bold;">₹${data.max_price}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 0.3rem;">Highest expected</div>
+                            </div>
+                            <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); padding: 1rem; border-radius: 8px; color: white; text-align: center;">
+                                <div style="font-size: 0.9rem; opacity: 0.9; margin-bottom: 0.5rem;">🎯 Modal Price</div>
+                                <div style="font-size: 1.5rem; font-weight: bold;">₹${data.modal_price}</div>
+                                <div style="font-size: 0.8rem; opacity: 0.8; margin-top: 0.3rem;">Most frequent</div>
+                            </div>
+                        </div>
+                        
+                        <h4>📊 Next 7 Days Forecast:</h4>
+                        <table style="width:100%; border-collapse: collapse; margin-top: 0.5rem;">
+                            <thead>
+                                <tr style="background: #3498db; color: white;">
+                                    <th style="padding: 0.5rem; text-align: left;">Date</th>
+                                    <th style="padding: 0.5rem; text-align: right;">Predicted Price (₹/kg)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${data.predictions.slice(0, 7).map((p, index) => `
+                                    <tr style="background: ${index % 2 === 0 ? '#f8f9fa' : 'white'};">
+                                        <td style="padding: 0.5rem; border: 1px solid #ddd;">Day ${p.day} - ${p.date}</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-weight: bold; color: #27ae60;">₹${p.predicted_price}</td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p style="color: red;">Error: ${data.error}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        async function getMarketPrices() {
+            const state = document.getElementById('stateSelect').value;
+            const market = document.getElementById('marketSelect').value;
+            const resultDiv = document.getElementById('priceResult');
+            resultDiv.style.display = 'block';
+            resultDiv.innerHTML = '<div class="loading">Loading market prices...</div>';
+
+            try {
+                let url = `${API_BASE}/price/market-prices`;
+                const params = new URLSearchParams();
+                if (state) params.append('state', state);
+                if (market) params.append('market', market);
+                if (params.toString()) url += '?' + params.toString();
+                
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data.success) {
+                    const trendIcon = {
+                        'up': '📈',
+                        'down': '📉',
+                        'stable': '➡️'
+                    };
+                    const trendColor = {
+                        'up': '#27ae60',
+                        'down': '#e74c3c',
+                        'stable': '#3498db'
+                    };
+                    
+                    let locationInfo = '';
+                    if (data.state && data.market) {
+                        locationInfo = `<p><strong>📍 Location:</strong> ${data.market}, ${data.state}</p>`;
+                    } else if (data.state) {
+                        locationInfo = `<p><strong>📍 State:</strong> ${data.state}</p>`;
+                    } else {
+                        locationInfo = `<p><strong>📍 Location:</strong> National Average Prices</p>`;
+                    }
+                    
+                    let marketAdjustmentInfo = '';
+                    if (data.market_factor && data.market_factor !== 1.0) {
+                        const adjustmentPercent = ((data.market_factor - 1) * 100).toFixed(1);
+                        const adjustmentText = adjustmentPercent > 0 ? `+${adjustmentPercent}%` : `${adjustmentPercent}%`;
+                        marketAdjustmentInfo = `
+                            <div style="background: #e3f2fd; padding: 0.5rem; border-radius: 5px; margin: 0.5rem 0;">
+                                <p style="margin: 0; font-size: 0.9rem;"><strong>Market Adjustment:</strong> ${adjustmentText}</p>
+                                <p style="margin: 0; font-size: 0.8rem; color: #666;">${data.market_info}</p>
+                            </div>
+                        `;
+                    }
+                    
+                    // Separate fruits and vegetables
+                    const fruits = data.prices.filter(p => 
+                        ['Apples', 'Bananas', 'Grapes', 'Lemons', 'Limes', 'Mangoes', 'Oranges', 'Papayas', 'Pears', 'Pineapples', 'Strawberries'].includes(p.crop)
+                    );
+                    const vegetables = data.prices.filter(p => 
+                        !['Apples', 'Bananas', 'Grapes', 'Lemons', 'Limes', 'Mangoes', 'Oranges', 'Papayas', 'Pears', 'Pineapples', 'Strawberries'].includes(p.crop)
+                    );
+                    
+                    resultDiv.innerHTML = `
+                        <h3>🛒 Current Market Prices</h3>
+                        ${locationInfo}
+                        ${marketAdjustmentInfo}
+                        
+                        <h4 style="margin-top: 1rem; color: #e67e22;">🍎 Fruits</h4>
+                        <table style="width:100%; border-collapse: collapse; margin-bottom: 1.5rem;">
+                            <thead>
+                                <tr style="background: #e67e22; color: white;">
+                                    <th style="padding: 0.5rem; text-align: left;">Crop</th>
+                                    <th style="padding: 0.5rem; text-align: right;">Price</th>
+                                    <th style="padding: 0.5rem; text-align: center;">Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${fruits.map((p, index) => `
+                                    <tr style="background: ${index % 2 === 0 ? '#fff3e0' : 'white'};">
+                                        <td style="padding: 0.5rem; border: 1px solid #ddd;">${p.crop}</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-weight: bold;">₹${p.price}/${p.unit}</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">
+                                            <span style="color: ${trendColor[p.trend]}; font-weight: bold;">
+                                                ${trendIcon[p.trend]} ${p.trend.toUpperCase()}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                        
+                        <h4 style="margin-top: 1rem; color: #27ae60;">🥬 Vegetables</h4>
+                        <table style="width:100%; border-collapse: collapse;">
+                            <thead>
+                                <tr style="background: #27ae60; color: white;">
+                                    <th style="padding: 0.5rem; text-align: left;">Crop</th>
+                                    <th style="padding: 0.5rem; text-align: right;">Price</th>
+                                    <th style="padding: 0.5rem; text-align: center;">Trend</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${vegetables.map((p, index) => `
+                                    <tr style="background: ${index % 2 === 0 ? '#e8f5e9' : 'white'};">
+                                        <td style="padding: 0.5rem; border: 1px solid #ddd;">${p.crop}</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: right; font-weight: bold;">₹${p.price}/${p.unit}</td>
+                                        <td style="padding: 0.5rem; border: 1px solid #ddd; text-align: center;">
+                                            <span style="color: ${trendColor[p.trend]}; font-weight: bold;">
+                                                ${trendIcon[p.trend]} ${p.trend.toUpperCase()}
+                                            </span>
+                                        </td>
+                                    </tr>
+                                `).join('')}
+                            </tbody>
+                        </table>
+                    `;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+            }
+        }
+
+        // Marketplace
+        function showAddProduct() {
+            document.getElementById('addProductForm').style.display = 'block';
+        }
+
+        async function loadProducts() {
+            const resultDiv = document.getElementById('productsResult');
+            resultDiv.innerHTML = '<div class="loading">Loading products...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/marketplace/products`);
+                const data = await response.json();
+
+                if (data.success && data.products.length > 0) {
+                    resultDiv.innerHTML = data.products.map(p => `
+                        <div class="product-card">
+                            <h4>${p.name}</h4>
+                            <p>${p.quantity} ${p.unit}</p>
+                            <p><strong>₹${p.price_per_unit}/${p.unit}</strong></p>
+                            <p>${p.location || 'Location not specified'}</p>
+                        </div>
+                    `).join('');
+                } else {
+                    resultDiv.innerHTML = '<p>No products available yet. Be the first to list!</p>';
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error loading products</p>`;
+            }
+        }
+
+        // Schemes
+        async function loadSchemes() {
+            const resultDiv = document.getElementById('schemesResult');
+            resultDiv.innerHTML = '<div class="loading">Loading schemes...</div>';
+
+            try {
+                const response = await fetch(`${API_BASE}/schemes/all`);
+                const data = await response.json();
+
+                if (data.success) {
+                    resultDiv.innerHTML = data.schemes.map(s => `
+                        <div class="scheme-card">
+                            <h3>${s.name}</h3>
+                            <p>${s.description}</p>
+                            <p><strong>Benefits:</strong> ${s.benefits}</p>
+                            <p><strong>Category:</strong> ${s.category}</p>
+                            <p><strong>How to Apply:</strong> ${s.how_to_apply}</p>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p style="color: red;">Error loading schemes</p>`;
+            }
+        }
+
+        function checkEligibility() {
+            alert('Please complete your profile first to check scheme eligibility!');
+            closeModal('schemesModal');
+            openModal('profileModal');
+        }
+
+        // Profile
+        // Load profile data when modal opens
+        function loadProfileData() {
+            // Try to load from localStorage first
+            const savedProfile = localStorage.getItem('farmerProfile');
+            const activityLog = JSON.parse(localStorage.getItem('activityLog') || '[]');
+            
+            if (savedProfile) {
+                const profile = JSON.parse(savedProfile);
+                document.getElementById('fullName').value = profile.full_name || '';
+                document.getElementById('phoneNumber').value = profile.phone_number || '';
+                document.getElementById('farmLocation').value = profile.farm_location || '';
+                document.getElementById('farmSize').value = profile.farm_size || '';
+                document.getElementById('state').value = profile.state || '';
+                document.getElementById('mainCrop').value = profile.main_crop || '';
+                document.getElementById('cropsGrown').value = profile.crops_grown || '';
+                
+                // Update header
+                document.getElementById('profileHeaderName').textContent = profile.full_name || 'Farmer Dashboard';
+                document.getElementById('profileHeaderLocation').textContent = profile.farm_location || 'Your Farming Hub';
+                
+                // Update statistics
+                const cropsArray = (profile.crops_grown || '').split(',').filter(c => c.trim());
+                document.getElementById('statCropsCount').textContent = cropsArray.length || '0';
+                document.getElementById('statFarmSize').textContent = profile.farm_size || '0';
+            }
+            
+            // Load activity statistics from localStorage
+            const detectionCount = parseInt(localStorage.getItem('detectionCount') || '0');
+            const priceCheckCount = parseInt(localStorage.getItem('priceCheckCount') || '0');
+            document.getElementById('statDetections').textContent = detectionCount;
+            document.getElementById('statPredictions').textContent = priceCheckCount;
+            
+            // Load recent activities
+            updateActivityLog();
+        }
+
+        function updateActivityLog() {
+            const activityLog = JSON.parse(localStorage.getItem('activityLog') || '[]');
+            const activityLogDiv = document.getElementById('activityLog');
+            
+            if (activityLog.length === 0) {
+                activityLogDiv.innerHTML = `
+                    <div style="padding: 0.75rem; background: white; border-radius: 5px; border-left: 4px solid #667eea;">
+                        <div style="font-weight: bold; color: #667eea;">🎉 Welcome to AgroMitra!</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">Start using features to track your activity</div>
+                    </div>
+                `;
+            } else {
+                activityLogDiv.innerHTML = activityLog.slice(-5).reverse().map(activity => `
+                    <div style="padding: 0.75rem; background: white; border-radius: 5px; margin-bottom: 0.5rem; border-left: 4px solid ${activity.color || '#667eea'};">
+                        <div style="font-weight: bold; color: ${activity.color || '#667eea'};">${activity.icon} ${activity.title}</div>
+                        <div style="font-size: 0.85rem; color: #666; margin-top: 0.25rem;">${activity.time}</div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function addActivity(icon, title, color = '#667eea') {
+            const activityLog = JSON.parse(localStorage.getItem('activityLog') || '[]');
+            const now = new Date();
+            const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            
+            activityLog.push({
+                icon: icon,
+                title: title,
+                time: `${timeStr} - ${now.toLocaleDateString()}`,
+                color: color,
+                timestamp: now.getTime()
+            });
+            
+            // Keep only last 20 activities
+            if (activityLog.length > 20) {
+                activityLog.shift();
+            }
+            
+            localStorage.setItem('activityLog', JSON.stringify(activityLog));
+        }
+
+        function saveProfile() {
+            const profile = {
+                full_name: document.getElementById('fullName').value,
+                phone_number: document.getElementById('phoneNumber').value,
+                farm_location: document.getElementById('farmLocation').value,
+                farm_size: document.getElementById('farmSize').value,
+                state: document.getElementById('state').value,
+                main_crop: document.getElementById('mainCrop').value,
+                crops_grown: document.getElementById('cropsGrown').value
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('farmerProfile', JSON.stringify(profile));
+            
+            // Add activity
+            addActivity('💾', 'Profile updated successfully', '#43e97b');
+            
+            console.log('Profile saved:', profile);
+            
+            const successMsg = {
+                'en': '✅ Profile saved successfully!',
+                'hi': '✅ प्रोफ़ाइल सफलतापूर्वक सहेजी गई!',
+                'ta': '✅ சுயவிவரம் வெற்றிகரமாக சேமிக்கப்பட்டது!'
+            };
+            
+            alert(successMsg[currentLanguage]);
+            closeModal('profileModal');
+        }
+
+        // Chatbot
+        async function sendMessage() {
+            const input = document.getElementById('chatInput');
+            const message = input.value.trim();
+            
+            if (!message) return;
+
+            const userLabel = {
+                'en': 'You',
+                'hi': 'आप',
+                'ta': 'நீங்கள்'
+            };
+
+            const botLabel = {
+                'en': 'AgriBot',
+                'hi': 'एग्रीबॉट',
+                'ta': 'AgriBot'
+            };
+
+            const chatContainer = document.getElementById('chatContainer');
+            chatContainer.innerHTML += `
+                <div class="chat-message user-message">
+                    <strong>${userLabel[currentLanguage]}:</strong> ${message}
+                </div>
+            `;
+
+            input.value = '';
+
+            try {
+                const response = await fetch(`${API_BASE}/chatbot/chat`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({message: message, language: currentLanguage})
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    chatContainer.innerHTML += `
+                        <div class="chat-message bot-message">
+                            <strong>${botLabel[currentLanguage]}:</strong> ${data.response}
+                        </div>
+                    `;
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            } catch (error) {
+                const errorMsg = {
+                    'en': 'Sorry, I\'m having trouble connecting. Please try again.',
+                    'hi': 'क्षमा करें, मुझे कनेक्ट करने में परेशानी हो रही है। कृपया पुन: प्रयास करें।',
+                    'ta': 'மன்னிக்கவும், எனக்கு இணைக்க சிக்கல் உள்ளது. தயவுசெய்து மீண்டும் முயற்சிக்கவும்.'
+                };
+                chatContainer.innerHTML += `
+                    <div class="chat-message bot-message">
+                        <strong>${botLabel[currentLanguage]}:</strong> ${errorMsg[currentLanguage]}
+                    </div>
+                `;
+            }
+        }
+
+        // FarmStories functions
+        async function loadFarmStories() {
+            try {
+                const response = await fetch(`${API_BASE}/farmstories/feed`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayStories(data.stories);
+                }
+            } catch (error) {
+                document.getElementById('storiesFeed').innerHTML = '<p style="color: red;">Error loading stories. Please try again.</p>';
+            }
+        }
+
+        async function loadTrending() {
+            try {
+                const response = await fetch(`${API_BASE}/farmstories/trending`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayStories(data.stories);
+                }
+            } catch (error) {
+                document.getElementById('storiesFeed').innerHTML = '<p style="color: red;">Error loading trending stories.</p>';
+            }
+        }
+
+        async function searchFarmStories() {
+            const query = document.getElementById('searchStories').value;
+            try {
+                const response = await fetch(`${API_BASE}/farmstories/search?q=${encodeURIComponent(query)}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    displayStories(data.stories);
+                }
+            } catch (error) {
+                document.getElementById('storiesFeed').innerHTML = '<p style="color: red;">Error searching stories.</p>';
+            }
+        }
+
+        function displayStories(stories) {
+            const feed = document.getElementById('storiesFeed');
+            
+            if (stories.length === 0) {
+                feed.innerHTML = '<p style="text-align: center; color: #666;">No stories found.</p>';
+                return;
+            }
+            
+            feed.innerHTML = stories.map(story => `
+                <div style="border: 1px solid #ddd; border-radius: 10px; padding: 1rem; margin-bottom: 1rem; background: white; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                    <div style="display: flex; align-items: center; margin-bottom: 0.5rem;">
+                        <span style="font-size: 2rem; margin-right: 0.5rem;">${story.profile_pic}</span>
+                        <div style="flex: 1;">
+                            <strong>${story.username}</strong>
+                            <div style="font-size: 0.85rem; color: #666;">
+                                ${story.location} • ${story.timestamp}
+                            </div>
+                        </div>
+                        <div style="text-align: right; font-size: 0.85rem; color: #666;">
+                            ${story.duration}
+                        </div>
+                    </div>
+                    
+                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 3rem 1rem; border-radius: 8px; text-align: center; margin-bottom: 0.5rem; position: relative;">
+                        <div style="font-size: 3rem;">${story.video_thumbnail}</div>
+                        <div style="position: absolute; top: 10px; right: 10px; background: rgba(0,0,0,0.5); padding: 0.25rem 0.5rem; border-radius: 5px; font-size: 0.8rem;">
+                            👁️ ${story.views}
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin: 0.5rem 0;">${story.title}</h4>
+                    <p style="margin: 0.5rem 0; color: #666;">${story.description}</p>
+                    
+                    <div style="display: flex; gap: 0.5rem; margin: 0.5rem 0; flex-wrap: wrap;">
+                        <span style="background: #e3f2fd; color: #1976d2; padding: 0.25rem 0.5rem; border-radius: 5px; font-size: 0.85rem;">🌾 ${story.crop}</span>
+                        ${story.tags.map(tag => `<span style="background: #f3e5f5; color: #7b1fa2; padding: 0.25rem 0.5rem; border-radius: 5px; font-size: 0.85rem;">#${tag}</span>`).join('')}
+                    </div>
+                    
+                    <div style="display: flex; gap: 1rem; margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px solid #eee;">
+                        <button onclick="likeStory(${story.id})" style="border: none; background: none; cursor: pointer; font-size: 1rem; color: #e74c3c;">
+                            ❤️ ${story.likes}
+                        </button>
+                        <span style="color: #666;">💬 ${story.comments}</span>
+                        <span style="color: #666;">📤 Share</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        async function likeStory(storyId) {
+            try {
+                const response = await fetch(`${API_BASE}/farmstories/like/${storyId}`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Reload stories to show updated likes
+                    loadFarmStories();
+                }
+            } catch (error) {
+                console.error('Error liking story:', error);
+            }
+        }
+
+        async function uploadStory() {
+            const title = document.getElementById('storyTitle').value;
+            const description = document.getElementById('storyDescription').value;
+            const crop = document.getElementById('storyCrop').value;
+            const location = document.getElementById('storyLocation').value;
+            
+            if (!title || !description) {
+                alert('Please fill in title and description');
+                return;
+            }
+            
+            const username = localStorage.getItem('farmerName') || 'Anonymous Farmer';
+            
+            try {
+                const response = await fetch(`${API_BASE}/farmstories/upload`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        username: username,
+                        title: title,
+                        description: description,
+                        crop: crop || 'General',
+                        location: location || 'India',
+                        tags: [crop.toLowerCase(), 'farming']
+                    })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    alert('FarmStory uploaded successfully! 🎉');
+                    // Clear form
+                    document.getElementById('storyTitle').value = '';
+                    document.getElementById('storyDescription').value = '';
+                    document.getElementById('storyCrop').value = '';
+                    document.getElementById('storyLocation').value = '';
+                    // Reload stories
+                    loadFarmStories();
+                }
+            } catch (error) {
+                alert('Error uploading story. Please try again.');
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+# Core Flask Dependencies
+Flask==2.3.3
+flask-cors==4.0.0
+Flask-SQLAlchemy==3.0.5
+Werkzeug==2.3.7
+PyJWT==2.8.0
+python-dotenv>=1.0.0
+
+# Production WSGI Server
+gunicorn>=21.0.0
+
+# AI/ML Dependencies
+torch>=2.0.0
+torchvision>=0.15.0
+Pillow>=10.0.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# HTTP Requests
+requests>=2.31.0
+
+# AI/ML for Generative AI features
+openai>=1.0.0
+google-generativeai>=0.3.0
+transformers>=4.30.0
+datasets>=2.10.0
+accelerate>=0.20.0
+
+# Firebase (Optional - for cloud database)
+firebase-admin>=6.0.0
+
+# Optional: For local AI models
+# ollama>=0.1.0
+# sentence-transformers>=2.2.0
+# langchain>=0.1.0

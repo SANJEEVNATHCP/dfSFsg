@@ -1,0 +1,977 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ user.username }} - AgroMitra Profile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color          <heade                🌾 Agro<span style="color: #27ae60;">Mitra</span> class="header">
+        <div class="header-content">
+            <div class="logo">
+                🌾 Agro<span style="color: #27ae60;">Mitra</span>
+            </div>
+            <button class="back-btn" onclick="window.close()">← Back to AgroMitra</button>
+        </div>
+    </header>    <div class="logo">
+                &#127806; Agro<span style="color: #27ae60;">Mitra</span>
+            </div>div class="header-content">
+            <div class="logo">
+                🌾 Agro<span style="color: #27ae60;">Mitra</span>
+            </div>
+            <button class="back-btn" onclick="window.close()">← Back to App</button>
+        </div>e50;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .back-btn {
+            background: #27ae60;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+
+        .back-btn:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .profile-hero {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-hero::before {
+            content: '🌾';
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 100px;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+
+        .farmer-info {
+            display: flex;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .farmer-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #27ae60, #219a52);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        .farmer-details h1 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .farmer-details .username {
+            color: #27ae60;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .farmer-details .location {
+            color: #666;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .quick-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .stat-card {
+            background: rgba(39, 174, 96, 0.1);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid rgba(39, 174, 96, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.15);
+        }
+
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        .card h2 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.3rem;
+        }
+
+        .farm-details {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .detail-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ecf0f1;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #666;
+        }
+
+        .detail-value {
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .crops-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 1rem;
+        }
+
+        .crop-item {
+            background: rgba(39, 174, 96, 0.1);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid rgba(39, 174, 96, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .crop-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.2);
+        }
+
+        .crop-emoji {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .crop-name {
+            font-size: 0.8rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(39, 174, 96, 0.05);
+            border-radius: 8px;
+            border-left: 4px solid #27ae60;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: rgba(39, 174, 96, 0.1);
+            transform: translateX(5px);
+        }
+
+        .activity-icon {
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 0.2rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #666;
+        }
+
+        .edit-btn {
+            background: #27ae60;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .edit-btn:hover {
+            background: #219a52;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            overflow: auto;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 2% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 10px;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover {
+            color: #000;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #27ae60;
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .save-btn {
+            background: #27ae60;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-right: 1rem;
+        }
+
+        .save-btn:hover {
+            background: #219a52;
+        }
+
+        .cancel-btn {
+            background: #6c757d;
+            color: white;
+            padding: 0.8rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .cancel-btn:hover {
+            background: #5a6268;
+        }
+
+        .edit-crops-btn {
+            background: none;
+            border: none;
+            color: #27ae60;
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 0.25rem;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            margin-left: 0.5rem;
+        }
+
+        .edit-crops-btn:hover {
+            background: rgba(39, 174, 96, 0.1);
+            transform: scale(1.1);
+        }
+
+        .crops-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .crop-option {
+            background: rgba(39, 174, 96, 0.05);
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .crop-option:hover {
+            border-color: #27ae60;
+            transform: scale(1.05);
+        }
+
+        .crop-option.selected {
+            border-color: #27ae60;
+            background: rgba(39, 174, 96, 0.1);
+        }
+
+        .crop-option.selected::after {
+            content: '✓';
+            position: absolute;
+            top: 5px;
+            right: 8px;
+            color: #27ae60;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .crop-option-emoji {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .crop-option-name {
+            font-size: 0.9rem;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .farmer-info {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .quick-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                width: 95%;
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                � Farmers <span style="color: #27ae60;">App</span>
+            </div>
+            <button class="back-btn" onclick="window.close()">← Back to AgroMitra</button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="profile-hero">
+            <div class="farmer-info">
+                <div class="farmer-avatar">
+                    🧑‍🌾
+                </div>
+                <div class="farmer-details">
+                    <h1>{{ profile.full_name or user.username }}</h1>
+                    <div class="username">@{{ user.username }}</div>
+                    <div class="location">📍 {{ profile.farm_location or 'Punjab, India' }}</div>
+                    <button class="edit-btn" onclick="openEditModal()">✏️ Edit Profile</button>
+                </div>
+            </div>
+            
+            <div class="quick-stats">
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.products_count }}</div>
+                    <div class="stat-label">Products Listed</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.detections_count }}</div>
+                    <div class="stat-label">Disease Checks</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">₹{{ stats.total_revenue }}</div>
+                    <div class="stat-label">Total Revenue</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.crops_variety }}</div>
+                    <div class="stat-label">Crop Varieties</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.success_rate }}%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">{{ stats.sustainability_score }}%</div>
+                    <div class="stat-label">Sustainability</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h2>🚜 Farm Details</h2>
+                <div class="farm-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Farm Size</span>
+                        <span class="detail-value">{{ profile.farm_size or 25.5 }} acres</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">State</span>
+                        <span class="detail-value">{{ profile.state or 'Punjab' }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">District</span>
+                        <span class="detail-value">{{ profile.district or 'Amritsar' }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">PIN Code</span>
+                        <span class="detail-value">{{ profile.pin_code or '143001' }}</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Contact</span>
+                        <span class="detail-value">{{ user.phone or '+91-9876543210' }}</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>🌾 Crops Grown 
+                    <button class="edit-crops-btn" onclick="openCropsModal()" title="Edit Crops">✏️</button>
+                </h2>
+                <div class="crops-grid" id="cropsGrid">
+                    <!-- Crops will be loaded dynamically -->
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📊 Performance Metrics</h2>
+                <div class="farm-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Average Yield</span>
+                        <span class="detail-value">{{ stats.avg_yield or 'N/A' }}%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Products Success Rate</span>
+                        <span class="detail-value">{{ stats.success_rate or 'N/A' }}%</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Disease Detections</span>
+                        <span class="detail-value">{{ stats.detections_count or 0 }} scans</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Farm Efficiency</span>
+                        <span class="detail-value">
+                            {% if stats.products_count > 5 %}High
+                            {% elif stats.products_count > 2 %}Medium
+                            {% else %}Getting Started
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Technology Usage</span>
+                        <span class="detail-value">
+                            {% if stats.detections_count > 10 %}Advanced
+                            {% elif stats.detections_count > 3 %}Active
+                            {% else %}Basic
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>📈 Recent Activity</h2>
+                <div class="activity-list" id="activityList">
+                    <!-- Activities will be loaded dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Crops Modal -->
+    <div id="cropsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeCropsModal()">&times;</span>
+            <h2 style="color: #2c3e50; margin-bottom: 1.5rem;">🌾 Select Your Crops</h2>
+            <p style="color: #666; margin-bottom: 1.5rem;">Choose the crops you grow on your farm:</p>
+            
+            <div class="crops-selector" id="cropsSelector">
+                <!-- Crop options will be loaded here -->
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <button type="button" class="save-btn" onclick="saveCrops()">💾 Save Crops</button>
+                <button type="button" class="cancel-btn" onclick="closeCropsModal()">❌ Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Profile Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <h2 style="color: #2c3e50; margin-bottom: 1.5rem;">✏️ Edit Profile</h2>
+            <form id="editProfileForm">
+                <div class="form-group">
+                    <label for="fullName">Full Name *</label>
+                    <input type="text" id="fullName" name="fullName" value="{{ profile.full_name or user.username }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" value="{{ user.email }}" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" name="phone" value="{{ user.phone or '' }}">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="farmSize">Farm Size (acres)</label>
+                        <input type="number" id="farmSize" name="farmSize" value="{{ profile.farm_size or '' }}" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="farmLocation">Farm Location</label>
+                        <input type="text" id="farmLocation" name="farmLocation" value="{{ profile.farm_location or '' }}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <select id="state" name="state">
+                            <option value="">Select State</option>
+                            <option value="Punjab" {{ 'selected' if profile.state == 'Punjab' else '' }}>Punjab</option>
+                            <option value="Haryana" {{ 'selected' if profile.state == 'Haryana' else '' }}>Haryana</option>
+                            <option value="Uttar Pradesh" {{ 'selected' if profile.state == 'Uttar Pradesh' else '' }}>Uttar Pradesh</option>
+                            <option value="Madhya Pradesh" {{ 'selected' if profile.state == 'Madhya Pradesh' else '' }}>Madhya Pradesh</option>
+                            <option value="Maharashtra" {{ 'selected' if profile.state == 'Maharashtra' else '' }}>Maharashtra</option>
+                            <option value="Karnataka" {{ 'selected' if profile.state == 'Karnataka' else '' }}>Karnataka</option>
+                            <option value="Tamil Nadu" {{ 'selected' if profile.state == 'Tamil Nadu' else '' }}>Tamil Nadu</option>
+                            <option value="Andhra Pradesh" {{ 'selected' if profile.state == 'Andhra Pradesh' else '' }}>Andhra Pradesh</option>
+                            <option value="Telangana" {{ 'selected' if profile.state == 'Telangana' else '' }}>Telangana</option>
+                            <option value="West Bengal" {{ 'selected' if profile.state == 'West Bengal' else '' }}>West Bengal</option>
+                            <option value="Bihar" {{ 'selected' if profile.state == 'Bihar' else '' }}>Bihar</option>
+                            <option value="Odisha" {{ 'selected' if profile.state == 'Odisha' else '' }}>Odisha</option>
+                            <option value="Rajasthan" {{ 'selected' if profile.state == 'Rajasthan' else '' }}>Rajasthan</option>
+                            <option value="Gujarat" {{ 'selected' if profile.state == 'Gujarat' else '' }}>Gujarat</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="district">District</label>
+                        <input type="text" id="district" name="district" value="{{ profile.district or '' }}">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pinCode">PIN Code</label>
+                        <input type="text" id="pinCode" name="pinCode" value="{{ profile.pin_code or '' }}" pattern="[0-9]{6}">
+                    </div>
+                    <div class="form-group">
+                        <label for="language">Preferred Language</label>
+                        <select id="language" name="language">
+                            <option value="en" {{ 'selected' if user.language_preference == 'en' else '' }}>English</option>
+                            <option value="hi" {{ 'selected' if user.language_preference == 'hi' else '' }}>हिंदी (Hindi)</option>
+                            <option value="ta" {{ 'selected' if user.language_preference == 'ta' else '' }}>தமிழ் (Tamil)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cropsGrown">Crops Grown (comma-separated)</label>
+                    <input type="text" id="cropsGrown" name="cropsGrown" value="{{ profile.crops_grown or '' }}" placeholder="e.g., Wheat, Rice, Vegetables">
+                </div>
+
+                <div style="margin-top: 2rem;">
+                    <button type="submit" class="save-btn">💾 Save Changes</button>
+                    <button type="button" class="cancel-btn" onclick="closeEditModal()">❌ Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Available crops with emojis
+        const availableCrops = [
+            { name: 'Wheat', emoji: '🌾' },
+            { name: 'Rice', emoji: '🍚' },
+            { name: 'Corn', emoji: '🌽' },
+            { name: 'Potato', emoji: '🥔' },
+            { name: 'Tomato', emoji: '🍅' },
+            { name: 'Cabbage', emoji: '🥬' },
+            { name: 'Onion', emoji: '🧅' },
+            { name: 'Carrot', emoji: '🥕' },
+            { name: 'Beans', emoji: '🫘' },
+            { name: 'Peas', emoji: '🟢' },
+            { name: 'Spinach', emoji: '🥬' },
+            { name: 'Lettuce', emoji: '🥬' },
+            { name: 'Broccoli', emoji: '🥦' },
+            { name: 'Cauliflower', emoji: '🥦' },
+            { name: 'Eggplant', emoji: '🍆' },
+            { name: 'Pepper', emoji: '🌶️' },
+            { name: 'Cucumber', emoji: '🥒' },
+            { name: 'Sugarcane', emoji: '🎋' },
+            { name: 'Cotton', emoji: '🌿' },
+            { name: 'Soybean', emoji: '🫘' }
+        ];
+
+        let selectedCrops = [];
+
+        // Load crops on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserCrops();
+            loadRecentActivity();
+        });
+
+        function loadUserCrops() {
+            // Get crops from profile data or use defaults
+            const cropsString = '{{ profile.crops_grown or "Wheat, Rice, Potato" }}';
+            const userCrops = cropsString.split(',').map(crop => crop.trim());
+            
+            const cropsGrid = document.getElementById('cropsGrid');
+            cropsGrid.innerHTML = '';
+
+            userCrops.forEach(cropName => {
+                const cropInfo = availableCrops.find(c => c.name.toLowerCase() === cropName.toLowerCase()) || 
+                                { name: cropName, emoji: '🌱' };
+                
+                const cropElement = document.createElement('div');
+                cropElement.className = 'crop-item';
+                cropElement.innerHTML = `
+                    <div class="crop-emoji">${cropInfo.emoji}</div>
+                    <div class="crop-name">${cropInfo.name}</div>
+                `;
+                cropsGrid.appendChild(cropElement);
+            });
+
+            selectedCrops = userCrops;
+        }
+
+        function openCropsModal() {
+            document.getElementById('cropsModal').style.display = 'block';
+            loadCropsSelector();
+        }
+
+        function closeCropsModal() {
+            document.getElementById('cropsModal').style.display = 'none';
+        }
+
+        function loadCropsSelector() {
+            const selector = document.getElementById('cropsSelector');
+            selector.innerHTML = '';
+
+            availableCrops.forEach(crop => {
+                const isSelected = selectedCrops.some(selected => 
+                    selected.toLowerCase() === crop.name.toLowerCase()
+                );
+
+                const cropElement = document.createElement('div');
+                cropElement.className = `crop-option ${isSelected ? 'selected' : ''}`;
+                cropElement.onclick = () => toggleCrop(crop.name, cropElement);
+                cropElement.innerHTML = `
+                    <div class="crop-option-emoji">${crop.emoji}</div>
+                    <div class="crop-option-name">${crop.name}</div>
+                `;
+                selector.appendChild(cropElement);
+            });
+        }
+
+        function toggleCrop(cropName, element) {
+            const index = selectedCrops.findIndex(crop => 
+                crop.toLowerCase() === cropName.toLowerCase()
+            );
+
+            if (index > -1) {
+                // Remove crop
+                selectedCrops.splice(index, 1);
+                element.classList.remove('selected');
+            } else {
+                // Add crop
+                selectedCrops.push(cropName);
+                element.classList.add('selected');
+            }
+        }
+
+        async function saveCrops() {
+            try {
+                const response = await fetch('/api/profile/update-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        cropsGrown: selectedCrops.join(', ')
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ Crops updated successfully!');
+                    closeCropsModal();
+                    loadUserCrops(); // Refresh the display
+                } else {
+                    alert('❌ Error updating crops: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error updating crops: ' + error.message);
+            }
+        }
+
+        function loadRecentActivity() {
+            const activityList = document.getElementById('activityList');
+            
+            // Get activities from template data
+            const activities = {{ activities | tojson }};
+
+            activityList.innerHTML = '';
+            
+            activities.forEach(activity => {
+                const activityElement = document.createElement('div');
+                activityElement.className = 'activity-item';
+                activityElement.innerHTML = `
+                    <div class="activity-icon">${activity.icon}</div>
+                    <div class="activity-content">
+                        <div class="activity-title">${activity.title}</div>
+                        <div class="activity-time">${activity.time}</div>
+                    </div>
+                `;
+                activityList.appendChild(activityElement);
+            });
+        }
+
+        function openEditModal() {
+            document.getElementById('editModal').style.display = 'block';
+        }
+
+        function closeEditModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const editModal = document.getElementById('editModal');
+            const cropsModal = document.getElementById('cropsModal');
+            
+            if (event.target == editModal) {
+                editModal.style.display = 'none';
+            }
+            if (event.target == cropsModal) {
+                cropsModal.style.display = 'none';
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('editProfileForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {};
+            
+            // Convert FormData to regular object
+            for (let [key, value] of formData.entries()) {
+                data[key] = value;
+            }
+
+            try {
+                const response = await fetch('/api/profile/update-info', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('✅ Profile updated successfully!');
+                    closeEditModal();
+                    // Reload the page to show updated information
+                    window.location.reload();
+                } else {
+                    alert('❌ Error updating profile: ' + (result.message || 'Unknown error'));
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('❌ Error updating profile: ' + error.message);
+            }
+        });
+    </script>
+</body>
+</html>
